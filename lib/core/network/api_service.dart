@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../../domain/entities/contact.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrl = 'http://localhost:3000';
 
   Future<List<Contact>> fetchContacts(int page, int limit) async {
     final response = await http.get(
@@ -11,7 +11,12 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      final List jsonData = json.decode(response.body);
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+
+      if (jsonMap['contacts'] == null) {
+        return [];
+      }
+      final List jsonData = jsonMap['contacts'] as List;
       return jsonData.map((e) => Contact.fromJson(e)).toList();
     } else {
       throw Exception('Error al obtener contactos');

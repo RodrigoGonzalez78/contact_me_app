@@ -4,6 +4,8 @@ import '../viewmodels/contact_viewmodel.dart';
 import 'contact_detail_screen.dart';
 
 class ContactListScreen extends StatelessWidget {
+  const ContactListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ContactViewModel>(context);
